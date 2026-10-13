@@ -1,0 +1,17 @@
+.DS_Store
+# setup / start_dev が作る接続設定（PAT を含む）
+.snowflake/
+.temp/
+# HOME をこのフォルダに向けて起動するため、各ツールのキャッシュがここに作られる
+.npm/
+.cache/
+.config/
+.local/
+.cortex/
+AppData/
+# アプリ
+app/node_modules/
+app/.next/
+app/snowflake.log
+app/.env*
+__pycache__/

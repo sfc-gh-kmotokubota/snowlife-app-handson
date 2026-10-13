@@ -1,0 +1,30 @@
+version: 2
+
+name: SNOWLIFE_SALES_APP
+database: SNOWLIFE_HANDSON_DB
+schema: APP
+query_warehouse: SNOWLIFE_HANDSON_WH
+
+ignore:
+  - node_modules
+  - .env*
+  - .next
+  - .git
+  - snowflake.log
+  - __tests__
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+build:
+  commands:
+    - ["npm", "run", "build"]
+    # standalone 出力に静的ファイルを含める
+    - ["cp", "-r", ".next/static", ".next/standalone/.next/static"]
+    - ["cp", "-r", "public", ".next/standalone/public"]
+    # standalone に必要な node_modules は含まれているので、元の node_modules は消す
+    - ["rm", "-rf", "node_modules"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
