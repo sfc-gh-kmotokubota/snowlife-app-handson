@@ -1,0 +1,14 @@
+# CoCo CLI（ripgrep）のコード検索から外すもの。
+# ZIP で配布すると .git がなく .gitignore が効かないため、.ignore にも書いておく。
+app/node_modules/
+app/.next/
+.snowflake/
+.temp/
+.npm/
+.cache/
+.config/
+.local/
+.cortex/
+AppData/
+Library/
+.zsh/
