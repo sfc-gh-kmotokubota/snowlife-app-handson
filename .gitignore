@@ -19,3 +19,7 @@ app/.next/
 app/snowflake.log
 app/.env*
 __pycache__/
+
+# TypeScript のビルドキャッシュ
+app/tsconfig.tsbuildinfo
+*.tsbuildinfo
