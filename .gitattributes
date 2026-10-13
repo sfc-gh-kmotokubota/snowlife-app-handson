@@ -1,3 +1,4 @@
-*.bat text eol=crlf
+# Windows のバッチは CRLF のまま保存する（ZIP ダウンロードでも改行が変わらないように）
+*.bat -text
 *.command text eol=lf
 *.sh text eol=lf
