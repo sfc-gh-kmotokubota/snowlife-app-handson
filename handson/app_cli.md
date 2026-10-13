@@ -43,7 +43,11 @@ flowchart LR
 
 1. GitHub からこのリポジトリを ZIP でダウンロードし、デスクトップなど分かりやすい場所に展開します。
    - `Code` » `Download ZIP`
-2. 展開したフォルダ（`snowlife-app-handson-main`）を開き、`setup_win.bat` をダブルクリックします（Mac は `setup_mac.command`）。
+2. 展開したフォルダ（`snowlife-app-handson-main`）でセットアップを始めます。
+   - **Windows**: `setup_win.bat` をダブルクリックします。
+   - **Mac**: ターミナルを開き、`cd `（最後に半角スペース）と入力してから、展開したフォルダをターミナルにドラッグして Enter を押します。続けて `bash setup_mac.command` と入力して Enter を押します。
+     - インターネットから取得した `.command` は、macOS の安全機能（Gatekeeper）によりダブルクリックでは開けません。
+     - 「ターミナルが「デスクトップ」フォルダ内のファイルにアクセスしようとしています」と表示されたら「許可」を押します。
 3. 前提チェックがすべて `[OK]` になることを確認します。
 4. 聞かれた順に入力します。
    - アカウント識別子（Snowsight 左下のアイコン » 「Connect a tool to Snowflake」で確認。例: `ABCDEFG-XY12345`）
@@ -61,7 +65,9 @@ flowchart LR
 
 ## STEP 2: アプリを手元で動かす（10 分）
 
-1. 展開したフォルダで、`start_dev_win.bat` をダブルクリックします（Mac は `start_dev_mac.command`）。CoCo CLI のウィンドウはそのままにしておきます。
+1. CoCo CLI のウィンドウはそのままにして、もう 1 つウィンドウを開きます。
+   - **Windows**: 展開したフォルダで `start_dev_win.bat` をダブルクリックします。
+   - **Mac**: ターミナルで Command + N を押して新しいウィンドウを開き、STEP 1 と同じように `cd ` と入力してフォルダをドラッグし、Enter を押します。続けて `bash start_dev_mac.command` と入力して Enter を押します。
 2. 初回は部品のインストールに 1〜3 分かかります。
 3. ブラウザで `http://localhost:3000` が開きます（開かない場合は自分で開いてください）。
 4. 画面のサンプル質問ボタンを押し、Agent が答えることを確認します。答えまで 20 秒ほどかかります。
@@ -114,9 +120,10 @@ CoCo CLI に次のお題を 1 つずつ貼り付けて送り、ブラウザで�
 アプリを Snowflake にデプロイしてください。
 ```
 
-2. CoCo が `snow app deploy` を実行します。初回は 5 分ほどかかります（Snowflake 上でアプリを組み立てています）。
-3. 表示された URL（`https://〜.snowflakecomputing.app`）をブラウザで開き、Snowflake にログインします。
-4. 手元と同じように Agent が答えることを確認します。
+2. CoCo がデプロイ先を示して確認してくるので、「はい」と返事をします。
+3. CoCo が `snow app deploy` を実行します。初回は 3〜5 分ほどかかります（Snowflake 上でアプリを組み立てています）。
+4. 表示された URL（`https://〜.snowflakecomputing.app`）をブラウザで開き、Snowflake にログインします。
+5. 手元と同じように Agent が答えることを確認します。
 
 > 画面を直したら、もう一度「デプロイして」と頼むと、同じ URL のまま更新されます。
 

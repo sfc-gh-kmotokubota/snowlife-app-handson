@@ -18,9 +18,9 @@
 ## はじめかた
 
 1. このリポジトリを `Code` » `Download ZIP` でダウンロードして展開する
-2. `setup_win.bat`（Mac は `setup_mac.command`）をダブルクリックする
+2. `setup_win.bat` をダブルクリックする（Mac はターミナルで展開したフォルダに移動し、`bash setup_mac.command`。インターネットから取得した `.command` は Gatekeeper によりダブルクリックでは開けません）
    - 前提チェック → 接続設定（PAT の自動生成）→ 環境構築（`catchup.sql`、約 5 分）→ CoCo CLI の起動、まで自動で進みます
-3. 別ウィンドウで `start_dev_win.bat`（Mac は `start_dev_mac.command`）を実行し、`http://localhost:3000` を開く
+3. 別ウィンドウで `start_dev_win.bat`（Mac は `bash start_dev_mac.command`）を実行し、`http://localhost:3000` を開く
 4. [handson/app_cli.md](handson/app_cli.md) の手順に沿って進める
 
 ## フォルダ構成

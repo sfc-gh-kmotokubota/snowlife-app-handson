@@ -34,10 +34,19 @@ export async function POST(req: Request) {
     const response = typeof raw === "string" ? JSON.parse(raw) : raw
     const content: ContentItem[] = response?.content ?? []
 
-    const answer = content
-      .filter((c) => c.type === "text")
-      .map((c) => c.text ?? "")
-      .join("")
+    // ツール呼び出しの合間のつぶやき（"Run queries in parallel." など）を除くため、
+    // 最後のツール呼び出しより後のテキストだけを回答として使う
+    const lastToolIndex = content.reduce(
+      (last, c, i) => (c.type === "tool_use" || c.type === "tool_result" ? i : last),
+      -1,
+    )
+    const textAfter = (from: number) =>
+      content
+        .slice(from)
+        .filter((c) => c.type === "text")
+        .map((c) => c.text ?? "")
+        .join("")
+    const answer = textAfter(lastToolIndex + 1) || textAfter(0)
     const tools = content
       .filter((c) => c.type === "tool_use")
       .map((c) => c.tool_use?.name)

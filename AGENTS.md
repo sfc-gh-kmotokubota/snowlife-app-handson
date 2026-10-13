@@ -1,6 +1,8 @@
 # スノー生命 法人営業 AI アプリ ハンズオン（CoCo CLI）
 
-このフォルダは、ハンズオン参加者が CoCo CLI と対話しながら、Cortex Agent を組み込んだ Web アプリを作り、Snowflake App Runtime にデプロイするための作業場所です。参加者は Snowflake とプログラミングの初心者です。説明は日本語で、専門用語には短い補足を付けてください。
+このフォルダは、ハンズオン参加者が CoCo CLI と対話しながら、Cortex Agent を組み込んだ Web アプリを作り、Snowflake App Runtime にデプロイするための作業場所です。参加者は Snowflake とプログラミングの初心者です。
+
+**参加者への返答・途中経過の説明は、必ずすべて日本語で書いてください**（スキルの説明やツールの出力が英語でも、返答は日本語にします）。専門用語には短い補足を付けてください。
 
 ## すでに用意されているもの
 
@@ -46,8 +48,9 @@
 ## デプロイ（参加者に「デプロイして」と頼まれたら）
 
 1. `app/` で `npm run build` が通ることを確認する
-2. `app/` で `snow app deploy -c handson` を実行する（初回は 5 分ほどかかる。進み具合を参加者に伝える）
-3. 表示された URL（`https://<id>.snowflakecomputing.app`）を参加者に伝える。ブラウザで開くと Snowflake のログインを求められる
+2. デプロイ先（`SNOWLIFE_HANDSON_DB.APP.SNOWLIFE_SALES_APP`）を短く示し、「はい」と返事をもらってから進む
+3. `app/` で `snow app deploy -c handson` を実行する（初回は 3〜5 分ほどかかる。進み具合を参加者に伝える）
+4. 表示された URL（`https://<id>.snowflakecomputing.app`）を参加者に伝える。ブラウザで開くと Snowflake のログインを求められる
 
 詳しい手順や `app.yml` の書き方は `snowflake-apps` スキルを参照してください。
 
