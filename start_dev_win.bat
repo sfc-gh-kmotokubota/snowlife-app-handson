@@ -45,5 +45,6 @@ echo  アプリを起動します: http://localhost:3000
 echo  止めるときは Ctrl + C
 echo ============================================================
 echo.
-start "" "http://localhost:3000"
+REM dev サーバーの起動を少し待ってからブラウザを開く（npm run dev はこのウィンドウを占有するため別プロセスで待つ）
+start "" /b powershell -NoProfile -Command "Start-Sleep -Seconds 8; Start-Process 'http://localhost:3000'"
 call npm run dev
