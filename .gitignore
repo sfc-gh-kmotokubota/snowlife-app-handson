@@ -9,6 +9,10 @@
 .local/
 .cortex/
 AppData/
+Library/
+.zsh/
+.zshrc
+.bash_history
 # アプリ
 app/node_modules/
 app/.next/
