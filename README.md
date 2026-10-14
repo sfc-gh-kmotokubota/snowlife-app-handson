@@ -41,6 +41,7 @@ snowlife-app-handson/
 ├── data/                     CRM 相当の CSV と PDF（catchup.sql が GitHub から取り込む）
 ├── skills/  answers/skills/  Cortex Agent の業務スキル（SKILL.md）
 ├── handson/app_cli.md        ハンズオン手順とお題プロンプト
+├── planb/                    Plan B: Snowsight の CoCo で作る Streamlit 版（手順・プロンプト・参考実装）
 └── organizer/checklist.md    主催者向けチェックリスト
 ```
 
