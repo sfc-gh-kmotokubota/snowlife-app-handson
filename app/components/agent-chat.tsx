@@ -19,6 +19,42 @@ const SAMPLES = [
   "GLTDの引受条件を教えて",
 ]
 
+const POLL_INTERVAL_MS = 3000
+const MAX_WAIT_MS = 5 * 60 * 1000
+
+// JSON 以外（入口のタイムアウトなど）が返ってきても、原因が分かるメッセージにする
+async function readJson(res: Response): Promise<Record<string, any>> {
+  const text = await res.text()
+  try {
+    return JSON.parse(text)
+  } catch {
+    return { status: "error", error: `通信に失敗しました（${res.status} ${text.slice(0, 80)}）` }
+  }
+}
+
+// 質問を受け付けてもらい（POST）、終わるまで数秒ごとに結果を確認する（GET）
+async function askAgent(text: string): Promise<Message> {
+  const start = await readJson(
+    await fetch("/api/agent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+    }),
+  )
+  if (!start.jobId) return { role: "agent", text: start.error ?? "Agent の呼び出しに失敗しました" }
+
+  const startedAt = Date.now()
+  while (Date.now() - startedAt < MAX_WAIT_MS) {
+    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS))
+    const json = await readJson(await fetch(`/api/agent?jobId=${encodeURIComponent(start.jobId)}`))
+    if (json.status === "running") continue
+    return json.status === "done"
+      ? { role: "agent", text: json.answer, tools: json.tools, sql: json.sql }
+      : { role: "agent", text: json.error ?? "Agent の呼び出しに失敗しました" }
+  }
+  return { role: "agent", text: "回答に時間がかかりすぎています。質問を短くして、もう一度送ってください" }
+}
+
 export function AgentChat() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
@@ -30,18 +66,8 @@ export function AgentChat() {
     setInput("")
     setLoading(true)
     try {
-      const res = await fetch("/api/agent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
-      })
-      const json = await res.json()
-      setMessages((m) => [
-        ...m,
-        json.error
-          ? { role: "agent", text: json.error }
-          : { role: "agent", text: json.answer, tools: json.tools, sql: json.sql },
-      ])
+      const reply = await askAgent(text)
+      setMessages((m) => [...m, reply])
     } catch {
       setMessages((m) => [...m, { role: "agent", text: "通信に失敗しました" }])
     } finally {

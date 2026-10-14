@@ -20,8 +20,11 @@
 ## アプリの構成
 
 - `app/app/page.tsx`: トップページ。`<AgentChat />` を表示
-- `app/components/agent-chat.tsx`: チャット画面（クライアントコンポーネント）
-- `app/app/api/agent/route.ts`: Agent を呼ぶ API。`SNOWFLAKE.CORTEX.DATA_AGENT_RUN` を `querySnowflakeLongRunning` とバインド変数で実行し、回答テキスト・使ったツール・生成された SQL を返す
+- `app/components/agent-chat.tsx`: チャット画面（クライアントコンポーネント）。`askAgent()` が「受付 → 3 秒ごとに結果確認」を行う
+- `app/app/api/agent/route.ts`: Agent を呼ぶ API。`POST` で質問を受け付けて `jobId` をすぐ返し、`GET ?jobId=` で結果（回答テキスト・使ったツール・生成された SQL）を返す。内部では `SNOWFLAKE.CORTEX.DATA_AGENT_RUN` を `querySnowflakeLongRunning` とバインド変数で実行する
+  - デプロイ先の入口は **約 90 秒で接続を切る（504 upstream request timeout）**。Agent は 1 分以上かかることがあるので、この 2 段階の仕組みを 1 回のリクエストで待つ形に戻さないでください
+  - 画面の別の部品から Agent に質問させたいときも、この API を同じ手順で使ってください
+  - 30 秒を超えそうな重い集計を作るときも、同じく「受付 → 結果確認」の形にしてください
 - `app/lib/snowflake.ts`: Snowflake への接続。ローカルでは `SNOWFLAKE_HOME` の `config.toml`、デプロイ後は SPCS のトークンを自動で使う
 - `app/lib/constants.ts`: アプリのタイトルとロゴ
 
